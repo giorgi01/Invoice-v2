@@ -1,6 +1,6 @@
-module Vat
+module Taxable
   Percent = 18
-  def calculate_vat(number)
+  def calculate_tax(number)
     number = number * Percent / 100
   end
 end
