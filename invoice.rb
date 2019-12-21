@@ -1,9 +1,9 @@
-require_relative 'modules/calculate_vat'
+require_relative 'modules/calculate_tax'
 require 'csv'
 
 class Invoice
 
-	include Vat
+	include Taxable
 
 	@@id = 0
 
@@ -38,11 +38,11 @@ class Invoice
 	end
 
 	def total_price
-		calculated_price + calculate_vat(calculated_price)
+		calculated_price + calculate_tax(calculated_price)
 	end
 
-	def vat_is
-		calculate_vat(calculated_price)
+	def tax_is
+		calculate_tax(calculated_price)
 	end
 
 end
@@ -52,4 +52,4 @@ b = Invoice.new("Vabaco", "Corporation Z")
 a.add_order
 p a.calculated_price
 puts "A total price to pay is: #{a.total_price}GEL"
-puts "Including a vat: #{a.vat_is}GEL"
+puts "Including a vat: #{a.tax_is}GEL"
