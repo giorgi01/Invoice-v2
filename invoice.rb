@@ -1,4 +1,4 @@
-require_relative 'calculate_vat'
+require_relative 'modules/calculate_vat'
 
 class Invoice
 
@@ -13,6 +13,14 @@ class Invoice
 		@buyer = buyer
 		@document_id = @@id +1 
 		@@id += 1 
+	end
+
+	def add_order
+		#code
+	end
+
+	def calculate_price
+		#code
 	end
 
 	def total_price
