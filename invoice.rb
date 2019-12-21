@@ -1,4 +1,8 @@
+require_relative 'calculate_vat'
+
 class Invoice
+
+	include Vat
 
 	@@id = 0
 
@@ -11,6 +15,9 @@ class Invoice
 		@@id += 1 
 	end
 
+	def total_price
+		price + calculate_vat(price)
+	end
 end
 
 a = Invoice.new("Vabaco", "Company Inc.")
