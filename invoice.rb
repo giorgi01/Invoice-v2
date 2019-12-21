@@ -1,15 +1,18 @@
-require_relative 'document'
+class Invoice
 
-class Invoice < Document
+	@@id = 0
 
-	attr_accessor :id, :seller, :buyer
+	attr_accessor :document_id, :seller, :buyer
 
-	def initialize(id, seller, buyer)
-		super(id)
+	def initialize(seller, buyer)
 		@seller = seller
 		@buyer = buyer
+		@document_id = @@id +1 
+		@@id += 1 
 	end
+
 end
 
-a = Invoice.new(1919, "Vabaco", "Evex")
-puts a.id, a.seller
+a = Invoice.new("Vabaco", "Company Inc.")
+b = Invoice.new("Vabaco", "Evex")
+puts a.document_id, b.document_id
