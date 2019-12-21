@@ -1,4 +1,5 @@
 require_relative 'modules/calculate_vat'
+require 'csv'
 
 class Invoice
 
@@ -16,7 +17,11 @@ class Invoice
 	end
 
 	def add_order
-		#code
+		hsh = {}
+		CSV.foreach('data.csv', headers: true) do |row|
+			hsh[row['product']+' '+row['description']] = Integer(row['price'])
+		end
+		hsh
 	end
 
 	def calculate_price
@@ -31,3 +36,4 @@ end
 a = Invoice.new("Vabaco", "Company Inc.")
 b = Invoice.new("Vabaco", "Evex")
 puts a.document_id, b.document_id
+p a.add_order
