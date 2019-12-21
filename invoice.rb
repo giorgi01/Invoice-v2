@@ -12,28 +12,44 @@ class Invoice
 	def initialize(seller, buyer)
 		@seller = seller
 		@buyer = buyer
-		@document_id = @@id +1 
 		@@id += 1 
+		@document_id = @@id 
 	end
-
+	
 	def add_order
-		hsh = {}
-		CSV.foreach('data.csv', headers: true) do |row|
-			hsh[row['product']+' '+row['description']] = Integer(row['price'])
+		puts 'If you want to exit please type \'exit\' or empty line'
+		while true
+			line = gets.chomp
+			if line.empty?
+				break
+			end
+			CSV.open('order.csv', 'a') do |csv|
+  				csv << line.split(',') #ID,product,desc,price,qty
+			end
 		end
-		hsh
 	end
-
-	def calculate_price
-		#code
+			
+	def calculated_price
+		sum = 0
+		CSV.foreach('order.csv', headers: true) do |row|
+			sum += row['price'].to_i * row['qty'].to_i
+		end
+		sum
 	end
 
 	def total_price
-		price + calculate_vat(price)
+		calculated_price + calculate_vat(calculated_price)
 	end
+
+	def vat_is
+		calculate_vat(calculated_price)
+	end
+
 end
 
 a = Invoice.new("Vabaco", "Company Inc.")
-b = Invoice.new("Vabaco", "Evex")
-puts a.document_id, b.document_id
-p a.add_order
+b = Invoice.new("Vabaco", "Corporation Z")
+a.add_order
+p a.calculated_price
+puts "A total price to pay is: #{a.total_price}GEL"
+puts "Including a vat: #{a.vat_is}GEL"
