@@ -1,5 +1,6 @@
 require_relative 'modules/calculate_tax'
 require 'csv'
+require 'prawn'
 
 class Invoice
 
@@ -50,17 +51,25 @@ class Invoice
 
 	def to_s
 		time = Time.now
-		txt = "\nINVOICE №#{document_id}\nSeller: #{seller} -> Buyer: #{buyer}"
+		txt = "\nINVOICE №#{document_id}\n\nSeller: #{seller} -> Buyer: #{buyer}\n"
 		CSV.foreach("order#{document_id}.csv", headers: true) do |row|
 			txt += "\nID: #{row['id']} | Product: #{row['product']} | Description: #{row['description']} | Price: #{row['price']} | Quantity: #{row['qty']}"
+			txt += "\n--------------------------------------------------------------------------------------------------------------"		
 		end
-		txt += "\nTotal price to pay: #{total_price}GEL\nIncluding the taxes: #{tax_is}GEL\nDate: #{time.day}/#{time.month}/#{time.year}"
+		txt += "\n\nTotal price to pay: #{total_price}GEL\n\nIncluding the taxes: #{tax_is}GEL\n\nDate: #{time.day}/#{time.month}/#{time.year}"
 	end
+
+	def save_pdf
+		txt = to_s
+		Prawn::Document.generate("invoice#{document_id}.pdf") do
+			font("#{Prawn::DATADIR}/fonts/DejaVuSans.ttf")
+  			text txt
+  		end
+  	end
+
 end
 
 a = Invoice.new("Vabaco", "Company Inc.")
 b = Invoice.new("Vabaco", "Corporation Z")
 a.add_order
-b.add_order
-puts a
-puts b
+a.save_pdf
