@@ -32,7 +32,7 @@ class Invoice
 			CSV.foreach('data.csv', headers: true) do |row|
 				if row['id'] == line[0]
 					quantity = line[1]
-					line[1..3] = row['product'],row['desc'],row['price'],quantity
+					line[1..4] = row['product'],row['desc'],row['price'],quantity
 					CSV.open("order#{document_id}.csv", 'a') do |csv|
   						csv << line
 					end
