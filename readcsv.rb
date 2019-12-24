@@ -17,6 +17,4 @@ class ReadCsv
 		end
 		@product_array
 	end
-
-
 end
