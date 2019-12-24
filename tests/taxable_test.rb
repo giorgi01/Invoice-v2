@@ -1,4 +1,4 @@
-require_relative 'taxable'
+require_relative '../modules/taxable'
 require 'test/unit'
 
 class Taxabletest < Test::Unit::TestCase
