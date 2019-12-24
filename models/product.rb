@@ -1,14 +1,11 @@
 class Product
 
-	attr_accessor :id, :name, :description, :price, :quantity
+	attr_accessor :id, :name, :description, :price
 
-	def initialize(id, name, decription, price, quantity)
+	def initialize(id, name, decription)
 		@id = id
 		@name = name
 		@decription = description
 		@price = price
-		@quantity = quantity
-		@total_price = 0
 	end
-
 end
